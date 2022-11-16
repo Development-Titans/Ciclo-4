@@ -1,0 +1,75 @@
+.nav {
+    width: 100%;
+    height: 70px;
+    background-color: rgb(55, 106, 125);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2%;
+    padding: 1% 1%;
+    overflow:hidden;
+    align-items: center;
+}
+
+.imagen-ti {
+    width: 50px;
+    max-height: 100vh;
+    padding: 0 0;
+    margin-left: 20%;
+}
+
+.espacio {
+    padding-left: 10%;
+}
+
+.imagen_portada {
+    object-fit: cover;
+    width: 100%;
+    height: 90vh;
+}
+
+.articulos {
+    text-align: center;
+    font-size: 50px;
+    margin: 2% 2%;
+}
+
+.contenedors {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    margin-left: 14%;
+    margin-bottom: 3%;
+}
+
+.tarjetas {
+    background-color: rgb(230, 221, 221);
+    width: 250px;
+    height: 350px;
+    margin: 2% 2%;
+    border-radius: 0.7rem;
+    padding: 4% 4%;
+    
+}
+
+.imagen-tar {
+    object-fit: cover;
+    width: 200px;
+    padding: 0 0 0 0;
+
+}
+
+hr {
+    background-color: rgba(103, 92, 92, 0.326);
+    height: 2px;
+    margin: 0 0 0 0;
+  }
+  
+  .titulos {
+    display: grid;
+    grid-template-columns: 20% 30% 15% 20% 15%;
+    margin-top: 4%;
+    align-items: center;
+  }
+  
+  .linea {
+    background-color: rgba(255, 255, 0, 0.507);
+  }

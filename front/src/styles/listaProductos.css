@@ -1,0 +1,152 @@
+/*! LISTA DE PRODUCTOS */
+
+ul {
+    position: fixed;
+    background-color: #EFBD65;
+    height: 100%;
+    width: 180px;
+    margin: 0;
+    list-style-type: none;
+    padding-left: 0%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.bot {
+    text-decoration: none;
+    color: black;
+    width: 180px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.bot:hover {
+    background-color: #F74660;
+    color: white;
+}
+
+.imagen {
+    width: 90%;
+    padding-left: 22%;
+    padding-top: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.titulo {
+    margin-left: 20%;
+    color: rgb(192, 155, 189);
+    margin-top: 3%;
+    margin-bottom: 1%;
+}
+
+.caja {
+    width: 75%;
+    height: 120px;
+    background-color: rgb(192, 155, 189);
+    margin-left: 19%;
+    border-radius: 0.7em;
+    display: flex;
+    
+}
+
+.num {
+    font-size: 40px;
+    padding: 1% 1%;
+    color: rgb(241, 236, 236);
+    margin: 0% 0%;
+}
+
+.parrafo {
+    display: flex;
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 0;
+    color: white;
+}
+
+.botones {
+    display: flex;
+    align-items: center;
+    margin: 3% 1%;
+
+}
+
+.seleccionado {
+    text-decoration: none;
+    width: 180px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    background-color: #F74660;
+    color: white;
+}
+
+/*! LISTA DE VENTAS */
+
+.titulo_ventas {
+    font-size: 90px;
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+    color: rgb(16, 16, 16);
+    font-weight: bold;
+}
+
+.contenido {
+    display: grid;
+    margin-left: 18%;
+    margin-top: 4%;
+    width: 70%;
+    background-color: #EFBD65;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1% 1%;
+    border-radius: 0.8em;
+    gap: 10%;
+}
+
+.letras {
+    text-align: center;
+    font-weight: bold;
+}
+
+.caja2 {
+    width: 70%;
+    height: 120px;
+    background-color: rgb(192, 155, 189);
+    margin-left: 18%;
+    margin-top: 1%;
+    border-radius: 0.7em;
+    display: flex;
+    justify-content: center;
+    gap: 12%;
+    align-items: center;
+}
+
+.letra_ventas {
+    margin-left: 3%;
+}
+
+/*! AGREGAR PRODUCTOS */
+
+.table {
+    width: 500px;
+    height: 100%;
+    background-color: rgb(235, 227, 227);
+    padding: 4% 4%;
+    border-radius: 0.8rem;
+}
+
+.centrar-tabla {
+    padding-top: 2%;
+    display: grid;
+    justify-content: center;
+}
