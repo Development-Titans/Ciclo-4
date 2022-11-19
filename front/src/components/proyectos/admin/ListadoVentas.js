@@ -7,13 +7,12 @@ const ListadoVentas = () => {
 
     // Extraer ventas de state inicial
     const ventContext = useContext(ventasContext);
-    const {ventas, mostrarVentas} = ventContext;
+    const {mostrarVentas, ventas} = ventContext;
 
     useEffect(() => {
         mostrarVentas()
     }, [])
-
-
+    
     return (
         <Fragment>
             <ul>
@@ -30,18 +29,19 @@ const ListadoVentas = () => {
             <h2 className="letras">Nombre</h2>
             <h2 className="letras">Categoria</h2>
             <h2 className="letras">Precio</h2>
-            <h2 className="letras">Fecha</h2>
+            <h2 className="letras">Stock</h2>
         </div>
-        {ventas.map(x => {
+        {ventas.map(element => {
             return (
-                <div key={x.id} style={{marginBottom: '1%'}} className='caja2'>
-                    <h2 className="letra_ventas">{x.nombre}</h2>
-                    <h2 className="letra_ventas">{x.categoria}</h2>
-                    <h2 className="letra_ventas">$ {x.precio}</h2>
-                    <h2 className="letra_ventas">{x.fecha}</h2>
+                <div key={element.id} style={{marginBottom: '1%'}} className='caja2'>
+                    <h2 className="letra_ventas">{element.nombre}</h2>
+                    <h2 className="letra_ventas">{element.categoria}</h2>
+                    <h2 className="letra_ventas">$ {element.precio}</h2>
+                    <h2 className="letra_ventas">{element.stock}</h2>
                 </div>
             )
-        })}
+        })
+        }
         </Fragment>
     );
 };

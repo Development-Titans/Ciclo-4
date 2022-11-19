@@ -6,8 +6,8 @@ const auth = require('../middleware/auth')
 // ! Ver ventas
 
 router.get('/',
-    auth.verificar,
-    auth.verificarAdmin,
+    /*auth.verificar,
+    auth.verificarAdmin,*/
     ventasController.mostrarVentas
 )
 

@@ -1,8 +1,33 @@
-import React, {useState, Fragment } from "react";
+import React, {useState, Fragment, useContext, useEffect } from "react";
 import '../../styles/login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import alertaContext from '../../context/alertas/alertaContext'
+import authContext from "../../context/autenticacion/authContext";
 
 const Login = () => {
+
+    // traemos history
+    const navigate = useNavigate();
+    // Registro nueva cuenta
+    const auth = useContext(authContext);
+    const {iniciarSesion, mensaje, autenticado} = auth;
+
+    // Extraer los valores del context
+    const alertica = useContext(alertaContext);
+    const {alerta, mostrarAlerta} = alertica;
+
+     // ! En caso de que el password o usuario no exista
+    useEffect(() => {
+        if(autenticado) {
+            navigate('/tienda');
+        }
+
+        if(mensaje) {
+            mostrarAlerta(mensaje.msg, mensaje.categoria)
+        }
+    }, [mensaje, autenticado, navigate]);
+
+
 
     // * State para iniciar Sesion
     // creamos un state con los datos a mostrar
@@ -29,14 +54,21 @@ const Login = () => {
         e.preventDefault();
 
         // Validar que no hayan campos vacios
-
+        if(email.trim() === '' || password.trim() === ''){
+            mostrarAlerta('Todos los campos son obligatorios', 'alert alert-warning')
+            return;
+        }
         // Pasarlo al action
+        iniciarSesion({email, password})
     }
 
     return (
         <Fragment>
         <div className="fondillo">
         <div className="login-box">
+        {alerta ? (
+                <div className={`alerta ${alerta.categoria}`}> {alerta.msg} </div>
+            ) : null}
             <h2>Acceso</h2>
             <form
                 onSubmit={onSubmit}
@@ -49,7 +81,7 @@ const Login = () => {
                 <input id="password" onChange={onChange} value={password} type="password" name="password" required="nombre" />
                 <label htmlFor="password">Contraseña</label>
             </div>
-            <a style={{marginTop: '5%'}} href="/">
+            <a href="#" style={{marginTop: '5%', color: 'white'}} onClick={onSubmit}>
                 <span></span>
                 <span></span>
                 <span></span>

@@ -15,6 +15,13 @@ import StoreState from './context/store/storeState';
 import CarritoComp from './context/carritoCompras/carritoState';
 import AlertaState from './context/alertas/alertaState';
 import AuthState from './context/autenticacion/authState';
+import tokenAuth from './config/token';
+
+// Revisar si tenemos un token
+const token = localStorage.getItem('token');
+if(token) {
+  tokenAuth(token);
+}
 
 function App() {
 
@@ -28,7 +35,7 @@ function App() {
                 <Router>
                   <Routes>
                     <Route exact path='/' element = {<Login/>} />
-                    <Route exact path='/nueva-cuenta' element = {<NuevaCuenta/>} />
+                    <Route exact path='/nueva-cuenta' element = {<NuevaCuenta />} />
                     <Route exact path='/inicio-admin' element = {<InicioAdmin/>} />
                     <Route exact path='/listado-productos' element = {<ListadoProductos/>} />
                     <Route exact path='/listado-ventas' element = {<ListadoVentas/>} />

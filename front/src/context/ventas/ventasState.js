@@ -2,15 +2,9 @@ import React, { useReducer } from 'react';
 import ventasContext from './ventasContext';
 import ventasReducer from './ventasReducer';
 import {MOSTRAR_VENTAS} from '../../types';
-
+import clienteAxios from '../../config/axios'
 
 const Ventas = props => {
-
-    const venticas = [
-        {
-            id: 54, nombre: 'Mouse', categoria: 'Accesorios', precio: 20000, fecha: '24/02/2021'
-        }
-    ]
 
     const initialState = {
         ventas: []
@@ -20,11 +14,16 @@ const Ventas = props => {
     const [state, dispatch] = useReducer(ventasReducer, initialState);
 
     // ! Mostrar ventas
-    const mostrarVentas = () => {
-        dispatch({
-            type: MOSTRAR_VENTAS,
-            payload: venticas
-        })
+    const mostrarVentas = async () => {
+        try {
+            const resul = await clienteAxios.get('/api/ventas');
+            dispatch({
+                type: MOSTRAR_VENTAS,
+                payload: resul.data
+            })
+        } catch (error) {
+            
+        }
     }
 
 

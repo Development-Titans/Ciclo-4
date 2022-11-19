@@ -39,8 +39,7 @@ const ModificarProductos = () => {
 
         // Pasarlo al action
     }
-
-    const validar = () => {
+    const validar = async () => {
         // Validar el producto
         if (nombre === '') {
             validarNombre()
@@ -57,6 +56,20 @@ const ModificarProductos = () => {
         if (url_imagen === ''){
             validarUrl()
         }
+
+        const articulo = JSON.parse(localStorage.getItem('articulo'))
+        const id = articulo._id
+        console.log(id)
+        await fetch(`http://localhost:9000/api/productos/${id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre: nombre, precio: precio, stock: stock, descripcion: descripcion, urlImagen: url_imagen, categoria: articulo.categoria })
+        })
+        .then(res => alert('Se modifico el producto'))
+        .catch((error) => console.log(error));
+        localStorage.removeItem('articulo')
     }
 
     return(

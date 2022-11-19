@@ -1,12 +1,14 @@
 const Carrito = require('../models/CarritoCompras')
 const Producto = require('../models/Productos')
 const { validationResult } = require('express-validator');
+const Ventas = require('../models/Ventas')
 
 // ! Mostrando el carrito
 
 exports.mostrarCarrito = async (req, res) => {
     try {
-        const shop = await Carrito.find({creador_Producto: req.usuario.id});
+        // const shop = await Carrito.find({creador_Producto: req.usuario.id});
+        const shop = await Carrito.find();
         res.send(shop)
         //res.json(shop);
     } catch (error) {
@@ -23,11 +25,12 @@ exports.agregarCarrito = async (req, res) => {
         // ! Crear un nuevo proyecto
         // Revisar el ID
         let produc = await Producto.findById(req.params.id);
-
+        console.log(produc)
         let c = await Carrito.findById(req.params.id);
 
         if (!c) {
             Carrito.create({
+                _id: produc._id,
                 nombre: produc.nombre,
                 fecha_creado: produc.fecha_creado,
                 precio: produc.precio,
@@ -90,4 +93,29 @@ exports.eliminarProducCarrito = async (req, res) => {
         res.status(500).send('No se encontro el producto a eliminar')
     }
 
+}
+
+// ! Crear ventas en el carrito
+
+exports.realizarVenta = async (req, res) => {
+    try {
+        // ! Crear una nueva venta
+        // Revisar el ID
+        let c = await Carrito.find();
+        c.forEach(iterador => {
+            Ventas.create({
+                nombre: iterador.nombre,
+                fecha_creado: iterador.fecha_creado,
+                precio: iterador.precio,
+                stock: iterador.stock,
+                descripcion: iterador.descripcion,
+                urlImagen: iterador.urlImagen,
+                categoria: iterador.categoria,
+                cantidad: iterador.cantidad
+            })
+        })   
+        res.send('Se genero la venta')
+        }catch(error) {
+            console.log(error)
+        }
 }

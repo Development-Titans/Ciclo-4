@@ -6,8 +6,8 @@ const conectarDB = require('./config/db');
 const app = express();
 
 // Habilitar cors
-const cors = require('cors');
-app.use(cors())
+const c = require('cors');
+app.use(c())
 
 // Conectar a la base de datos
 conectarDB();
@@ -16,7 +16,7 @@ conectarDB();
 app.use(express.json({extended: true}))
 
 // Puerto de la app
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 9000;
 
 // Importar rutas
 app.use('/api/usuarios', require('./routes/usuarios'))

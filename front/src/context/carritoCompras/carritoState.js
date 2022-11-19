@@ -2,19 +2,14 @@ import React, {useReducer} from 'react';
 import carritoContext from './carritoContext';
 import carritoReducer from './carritoReducer';
 import {MOSTRAR_PRODUCTOS_CARRITO, MOSTRAR_DATOS_CARRITO} from '../../types/index';
+import clienteAxios from '../../config/axios';
 
 const CarritoCompras = props => {
 
-    const carrito = [
-        {
-            id: 32, nombre: 'Mouse', precio: 25000, url_imagen: './Logo.png', cantidad: 5
-        }
-    ]
-
     // Inicializacion
     const initialState = {
-        carrito_compras: [],
-        datos_carrito: false
+        activar_carrito: false,
+        carrito_compras: []
     }
 
     // Dispatch
@@ -22,14 +17,20 @@ const CarritoCompras = props => {
 
     // Funciones
 
-    const mostrarCarrito = () => {
-        dispatch({
-            type: MOSTRAR_PRODUCTOS_CARRITO,
-            payload: carrito
-        })
+    // Mostrar datos en carrito
+    const mostrarCarrito = async () => {
+        try {
+            const carri = await clienteAxios.get('/api/carrito');
+            dispatch({
+                type: MOSTRAR_PRODUCTOS_CARRITO,
+                payload: carri.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
-
-    const mostrarDatos = () => {
+    // Activar si el carrito tiene datos
+    const activarCarritoCompras = () => {
         dispatch({
             type: MOSTRAR_DATOS_CARRITO
         })
@@ -39,10 +40,10 @@ const CarritoCompras = props => {
     return(
         <carritoContext.Provider
             value = {{
+                activar_carrito: state.activar_carrito,
                 carrito_compras: state.carrito_compras,
-                datos_carrito: state.datos_carrito,
-                mostrarCarrito,
-                mostrarDatos
+                activarCarritoCompras,
+                mostrarCarrito
             }}
         >
             {props.children}

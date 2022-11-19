@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import productoContext from '../../../context/productos/productoContext';
 
-
 const ListadoProductos = () => {
 
     // Extraer productos de state inicial
@@ -19,7 +18,24 @@ const ListadoProductos = () => {
     // Revisar si productos tiene contenido
     //if(productos.length === 0) return null;
 
+    const eliminarProducto = async (id) => {
+        await fetch('http://localhost:9000/api/productos/' + id, {
+            method: 'DELETE'
+        })
+        .then(res => alert('Se elimino el producto'))
+        .then(res=> {
+            console.log(res);
+        
+        })
+        .catch((error) => console.log(error))
+        
+    }
 
+    const modificarArticulo = (id) => {
+        localStorage.setItem('articulo', JSON.stringify(id));
+    }
+
+    let num = 0
     return(
         <Fragment>
             <div className='fondo'>
@@ -34,13 +50,14 @@ const ListadoProductos = () => {
             <img className='imagen' src='./Banner_admin.png' alt='no se puede ver'/>
             <h1 className='titulo'>Articulos</h1>
             {productos.map(pro =>{
+                num = num + 1
                 return(
-                    <div key={pro.id} style={{marginBottom: '1%'}} className='caja'>
-                    <h2 className='num'>{pro.numero}</h2>
-                        <img className='imagen-viendo' src={pro.url} alt='no se puede ver'/>
-                        <p className='parrafo'>{pro.parrafo}</p>
-                    <Button href='/modificar-productos' className='botones' style={{height: '40px', width: '200px'}} variant="primary">Modificar</Button>
-                    <Button className='botones' style={{height: '40px', width: '200px'}} variant="outline-danger">Eliminar</Button>
+                    <div key={pro._id} style={{marginBottom: '2%'}} className='caja'>
+                    <h2   className='num'>{num}</h2>
+                        <img className='imagen-viendo' src={pro.urlImagen} alt='no se puede ver'/>
+                        <p className='parrafo'>{pro.descripcion}</p>
+                    <Button onClick={() => modificarArticulo(pro)} href='/modificar-productos' className='botones' style={{height: '40px', width: '200px'}} variant="primary">Modificar</Button>
+                    <Button href='/listado-productos' onClick={() => eliminarProducto(pro._id)} className='botones' style={{height: '40px', width: '200px'}} variant="outline-danger">Eliminar</Button>
                 </div>
                 )
             })}

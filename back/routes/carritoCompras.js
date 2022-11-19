@@ -6,7 +6,7 @@ const auth = require('../middleware/auth')
 // ! Ver productos en carrito
 
 router.get('/',
-    auth.verificar,
+    /*auth.verificar,*/
     carritoController.mostrarCarrito
 )
 
@@ -14,7 +14,7 @@ router.get('/',
 
 router.put('/:id',
 
-    auth.verificar,
+    /*auth.verificar,*/
     carritoController.agregarCarrito
 )
 
@@ -22,7 +22,7 @@ router.put('/:id',
 
 router.delete('/:id',
 
-    auth.verificar,
+    /*auth.verificar,*/
     carritoController.eliminarProducto
 )
 
@@ -30,8 +30,15 @@ router.delete('/:id',
 
 router.delete('/',
 
-    auth.verificar,
+    /*auth.verificar,*/
     carritoController.eliminarProducCarrito
+)
+
+// ! Realizar venta
+
+router.get('/ventas',
+
+    carritoController.realizarVenta
 )
 
 module.exports = router;

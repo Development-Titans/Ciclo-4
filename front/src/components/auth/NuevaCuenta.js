@@ -1,19 +1,33 @@
-import React, {useState, Fragment, useContext } from "react";
+import React, {useState, Fragment, useContext, useEffect } from "react";
 import '../../styles/nuevaCuenta.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import alertaContext from '../../context/alertas/alertaContext'
 import authContext from "../../context/autenticacion/authContext";
 
-const NuevaCuenta = () => {
-
+const NuevaCuenta = (props) => {
+    
+    // traemos history
+    const navigate = useNavigate();
     // Registro nueva cuenta
-
     const auth = useContext(authContext);
-    const {registrarUsuario} = auth;
+    const {registrarUsuario, mensaje, autenticado} = auth;
 
     // Extraer los valores del context
     const alertica = useContext(alertaContext);
     const {alerta, mostrarAlerta} = alertica;
+
+     // ! En caso de que el usuario se haya autenticado o registrado o sea un registro duplicado
+    useEffect(() => {
+        if(autenticado) {
+            navigate('/tienda');
+        }
+
+        if(mensaje) {
+            mostrarAlerta(mensaje.msg, mensaje.categoria)
+        }
+        
+    }, [mensaje, autenticado, navigate]);
+
 
     // * State para iniciar Sesion
     // creamos un state con los datos a mostrar
@@ -39,7 +53,6 @@ const NuevaCuenta = () => {
     //* Cuando el usuario quiere iniciar sesion
 
     const onSubmit = e => {
-        console.log('dio clic')
         e.preventDefault();
 
         // Validar que no hayan campos vacios
@@ -96,7 +109,7 @@ const NuevaCuenta = () => {
                 <input id="confirmar" onChange={onChange} value={confirmar} type="password" name="confirmar" required="confirmar"/>
                 <label htmlFor="confirmar">Confirmar Contraseña</label>
             </div>
-            <a type="submit" href="#" style={{marginTop: '5%', color: 'white'}} onClick={onSubmit}>
+            <a type="submit" href="/none" style={{marginTop: '5%', color: 'white'}} onClick={onSubmit}>
                 <span></span>
                 <span></span>
                 <span></span>

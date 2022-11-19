@@ -2,25 +2,28 @@ import React, { Fragment, useContext, useEffect } from 'react'
 import '../../../styles/tienda.css'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import tiendaContext from '../../../context/store/storeContext'
-import carritoContext from '../../../context/carritoCompras/carritoContext';
+import StoreContext from '../../../context/store/storeContext';
 
 const Tienda = () => {
 
-    const storeContext = useContext(tiendaContext);
-    const {productos_store, mostrarProductosStore} = storeContext;
-
-    const carriContext = useContext(carritoContext);
-    const {mostrarCarrito} = carriContext;
+    // Extraer productos de state inicial
+    const storeetContext = useContext(StoreContext);
+    const {productos_store, mostrarProductosStore} = storeetContext;
 
     useEffect(() => {
         mostrarProductosStore()
     }, [])
 
-    const agregarCarrito = id => {
-        mostrarCarrito();
-        
-    }
+    // Agregar al carrito de compras
+    const agregarCarritoCompras = async (producto) => {
+
+        await fetch('http://localhost:9000/api/carrito/' + producto._id, {
+            method: 'put'
+        })
+        .then(res => alert('Se Agrego al carrito'))
+        .catch(err => console.log(err))
+        }
+    
 
     return (
         <Fragment>
@@ -48,12 +51,12 @@ const Tienda = () => {
             <div className='contenedors'>
                 {productos_store.map(iterador => {
                     return (
-                        <div key={iterador.id}>
+                        <div key={iterador._id}>
                             <div className='tarjetas'>
-                                <img className='imagen-tar' src={iterador.url_imagen} alt='no se puede ver'/>
+                                <img className='imagen-tar' src={iterador.urlImagen} alt='no se puede ver'/>
                                 <h4>{iterador.nombre}</h4>
                                 <h5>$ {iterador.precio}</h5>
-                                <Button onClick={agregarCarrito(iterador)} variant="primary">Agregar al Carrito</Button>
+                                <Button onClick={() => agregarCarritoCompras(iterador)} variant="primary">Agregar al Carrito</Button>
                             </div>
                         </div>
                     )

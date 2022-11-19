@@ -10,7 +10,7 @@ const carritoReducer = (state, action) => {
         case MOSTRAR_DATOS_CARRITO:
             return {
                 ...state,
-                datos_carrito: true
+                activar_carrito: true
             }
         default:
             return state;

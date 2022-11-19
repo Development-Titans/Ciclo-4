@@ -17,12 +17,11 @@ router.post('/',
         check('stock', 'El stock debe ser numerico').isNumeric(),
         check('stock', 'El stock es obligatorio').not().isEmpty(),
         check('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
-        check('urlImagen', 'La urlImagen es obligatoria').not().isEmpty(),
-        check('categoria', 'La categoria es obligatoria').not().isEmpty()
+        check('urlImagen', 'La urlImagen es obligatoria').not().isEmpty()
     ],
     // Primero va al auth a validar que si tenga el token y luego lo crea, esto para validar que si este logueado
-    auth.verificar,
-    auth.verificarAdmin,
+    /*auth.verificar,
+    auth.verificarAdmin,*/
     productosController.crearProducto
     
     
@@ -31,8 +30,8 @@ router.post('/',
 //! Ver todos los productos
 router.get('/',
     // Primero va al auth a validar que si tenga el token y luego lo crea, esto para validar que si este logueado
-    auth.verificar,
-    auth.verificarAdmin,
+    /*auth.verificar,
+    auth.verificarAdmin,*/
     productosController.mostrarProductos
 );
 
@@ -51,8 +50,8 @@ router.put('/:id',
     check('categoria', 'La categoria es obligatoria').not().isEmpty()
 ],
     // Primero va al auth a validar que si tenga el token y luego lo crea, esto para validar que si este logueado
-    auth.verificar,
-    auth.verificarAdmin,
+    /*auth.verificar,
+    auth.verificarAdmin,*/
     productosController.actualizarProducto
 )
 
@@ -60,8 +59,8 @@ router.put('/:id',
 router.delete('/:id',
 
     // Primero va al auth a validar que si tenga el token y luego lo crea, esto para validar que si este logueado
-    auth.verificar,
-    auth.verificarAdmin,
+    /*auth.verificar,
+    auth.verificarAdmin,*/
     productosController.eliminarProducto
 )
 

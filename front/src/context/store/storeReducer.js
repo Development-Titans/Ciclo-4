@@ -1,4 +1,4 @@
-import {MOSTRAR_PRODUCTOS_USER} from '../../types/index'
+import {MOSTRAR_PRODUCTOS_USER, AGREGAR_CARRITO} from '../../types/index'
 
 const storeReducer = (state, action) => {
     switch (action.type) {
@@ -7,7 +7,11 @@ const storeReducer = (state, action) => {
                 ...state,
                 productos_store: action.payload
             }
-
+        case AGREGAR_CARRITO:
+            return {
+                ...state,
+                carrito_compras: [...state.carrito_compras, action.payload]
+            }
         default:
             return state;
     }

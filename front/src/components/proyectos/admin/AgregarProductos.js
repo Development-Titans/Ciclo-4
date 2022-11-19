@@ -1,31 +1,40 @@
-import React, { Fragment, useContext, useState} from "react";
+import React, { Fragment, useContext, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/listaProductos.css";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import productoContext from "../../../context/productos/productoContext";
+import authContext from "../../../context/autenticacion/authContext";
 
 const AgregarProductos = () => {
 
+    // Extraer la informacion de autenticacion
+    const authCOntext = useContext(authContext);
+    const {usuarioAutenticado, cerrarSesion} = authCOntext;
+
+    useEffect(() => {
+        usuarioAutenticado();
+    }, [])
+
     // Obtener el state del formulario
     const productContext = useContext(productoContext);
-    const {boton, mostrarBoton, agregarProductos, validarNombre, validar_nombre, validarPrecio, validar_precio, validar_stock, validarStock, validar_descripcion, validarDescripcion, validar_url_imagen, validarUrl} = productContext;
+    const {boton, mostrarBoton, agregarProductos, validarNombre, validar_nombre, validarPrecio, validar_precio, validar_stock, validarStock, validar_descripcion, validarDescripcion, validar_urlImagen, validarUrl} = productContext;
 
 
     // Mostrar productos
 
     // * State de agregar un producto
     const [productos, agre] = useState({
+        id: '',
         nombre: '',
         precio: '',
         stock: '',
         descripcion: '',
-        url_imagen: '',
+        urlImagen: '',
     });
 
     // * Extraer datos
-    const {nombre, precio, stock, descripcion, url_imagen} = productos;
-
+    let {id, nombre, precio, stock, descripcion, urlImagen} = productos;
     // Hacemos que se agreguen los datos al state cuando el usuario los ingrese
 
     const onChangi = e => {
@@ -50,11 +59,12 @@ const AgregarProductos = () => {
         if (descripcion === ''){
             validarDescripcion()
         }
-        if (url_imagen === ''){
+        if (urlImagen === ''){
             validarUrl()
         }
         else{
             mostrarBoton();
+            console.log(productos)
             agregarProductos(productos);
         }
     }
@@ -78,7 +88,9 @@ const AgregarProductos = () => {
             <Link className="seleccionado" to={"/agregar-productos"}>
             Agregar Productos
             </Link>
-            <Link className="bot" to={"/listado-productos"}>
+            <Link className="bot" to={"/listado-productos"} 
+            onClick={() => cerrarSesion()}
+            >
             Cerrar Sesión
             </Link>
         </ul>
@@ -86,6 +98,10 @@ const AgregarProductos = () => {
         <div className="table">
                 <h1 style={{textAlign: "center", color: "black"}}>Agregar un Producto</h1>
                 <Form>
+                <Form.Group className="mb-3">
+                        <Form.Label htmlFor="id">Id</Form.Label>
+                        <Form.Control id="id" name="id" value={id} onChange={onChangi} type="text" placeholder="id"/>
+                    </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="nombre">Producto</Form.Label>
                         <Form.Control id="nombre" name="nombre" value={nombre} onChange={onChangi} type="text" placeholder="Nombre"/>
@@ -122,15 +138,15 @@ const AgregarProductos = () => {
                             /* no hace nada */
                         ): null }
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="url_imagen">Url Imagen</Form.Label>
-                        <Form.Control id="url_imagen" name="url_imagen" value={url_imagen} onChange={onChangi} type="text" placeholder="Url" />
+                        <Form.Label htmlFor="urlImagen">Url Imagen</Form.Label>
+                        <Form.Control id="urlImagen" name="urlImagen" value={urlImagen} onChange={onChangi} type="text" placeholder="Url" />
                     </Form.Group>
                     { /** Si validar_descripcion es verdadero o true */
-                        validar_url_imagen ? (
+                        validar_urlImagen ? (
                             <h5 style={{color: 'red'}}>La url es obligatoria</h5>
                             /* no hace nada */
                         ): null }
-                    <Button variant="primary" type="button" onClick={mos} >
+                    <Button href="/listado-productos" variant="primary" type="button" onClick={mos} >
                         Guardar
                     </Button>
                 </Form>

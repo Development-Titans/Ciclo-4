@@ -17,7 +17,7 @@ exports.crearProducto = async (req, res) => {
         const producto = new Producto(req.body);
 
         // Guardar quien fue el creador del producto via JWT
-        producto.creador_Producto = req.usuario.id;
+        // producto.creador_Producto = req.usuario.id;
 
         // Guardamos el productos
         producto.save();
@@ -25,7 +25,7 @@ exports.crearProducto = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).send('Hubo un error')
+        res.status(500).send('Error del metodo post' + error)
     }
 }
 

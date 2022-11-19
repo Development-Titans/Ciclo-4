@@ -6,20 +6,44 @@ import carritoContext from "../../../context/carritoCompras/carritoContext";
 
 const CarritoCompras = () => {
 
-    const carri = useContext(carritoContext);
-    const {carrito_compras, datos_carrito, mostrarCarrito, mostrarDatos} = carri;
-
+    const raro = useContext(carritoContext)
+    const {carrito_compras, activar_carrito, mostrarCarrito, activarCarritoCompras} = raro;
     useEffect(() => {
-        mostrarCarrito();
+        mostrarCarrito()
+        if(carrito_compras !== 0){
+            activarCarritoCompras()
+        }
     }, [])
+    let total = 0
 
-    // Si carrito de compras no tiene datos entoncces no haga nada
-    if (carrito_compras.length === 0) {
-        let prueba = 1;
-    }else{
-        // pero si carrito de compras tiene datos entonces active la funcion para mostrarlos
-        mostrarDatos()
+    const borrarDatoCarrito = dat => {
+        fetch('http://localhost:9000/api/carrito/' + dat._id, {
+            method: 'DELETE',
+        })
+        .then(res => alert('Se borro del carrito'))
+        .then(res=> {
+            console.log(res);
+        });
     }
+
+    const borrarTodoCarrito = () => {
+        fetch('http://localhost:9000/api/carrito/', {
+            method: 'DELETE',
+        })
+        .then(res => alert('Se vacia carrito'))
+        .then(res=> {
+            console.log(res);
+        });
+    }
+
+    const venta = () => {
+        fetch('http://localhost:9000/api/carrito/ventas')
+        .then(res => alert('Se realizo la venta'), borrarTodoCarrito())
+        .then(res=> {
+            console.log(res);
+        });
+    }
+
     return (
         <Fragment>
         <div className="nav">
@@ -78,17 +102,18 @@ const CarritoCompras = () => {
                     style={{ display: "inline-flex", width: "1050px" }}
                 ></hr>
                 {/*---------------------------------------------------------------------------------------- */}
-                {datos_carrito ? (
+                {activar_carrito ? (
                     carrito_compras.map(mostrar => {
+                        total = total + (mostrar.precio * mostrar.cantidad) 
                         return (
-                            <Fragment key={mostrar.id}>
+                            <Fragment key={mostrar._id}>
                             <div
                             className="titulos"
                             style={{ alignItems: "center", marginTop: "0" }}
                         >
                             <div style={{ maxWidth: "50%" }}>
                                 <img
-                                    src={mostrar.url_imagen}
+                                    src={mostrar.urlImagen}
                                     className="card-img-top"
                                     alt="No se observa"
                                 />
@@ -96,29 +121,29 @@ const CarritoCompras = () => {
                             <h5>$ {mostrar.precio}</h5>
                             <h5>{mostrar.cantidad}</h5>
                             <h5>$ {mostrar.precio}</h5>
-                            <button
+                            <button href="/carrito" onClick={() => borrarDatoCarrito(mostrar)}
                                 type="button"
                                 className="btn btn-danger">
                                 Eliminar
                             </button>
                         </div>
-                <div className="total">
-                    <h4 style={{ fontSize: "3rem" }}>TOTAL</h4>
-                    <h4 style={{ fontSize: "3rem" }}>$ {mostrar.total}</h4>
-                </div>
-                <div>
-                <Button href="/store" style={{ width: "40%", marginTop: "4%", height: "48PX", marginBottom: "8%", paddingTop: "1%" }} variant="outline-danger">
-                        CANCELAR COMPRA
-                    </Button>
-                    <Button style={{ width: "40%", marginTop: "4%", marginLeft: "20%", marginBottom: "8%" }} variant="primary" size="lg">
-                        COMPRAR
-                    </Button>
-                    
-                </div>
                 </Fragment>
                         )
                     })
                 ): <h1 style={{marginTop: '6%', marginLeft: '30%'}}>EL CARRITO ESTA VACIO</h1>}
+                <div className="total">
+                    <h4 style={{ fontSize: "3rem" }}>TOTAL</h4>
+                    <h4 style={{ fontSize: "3rem" }}>$ {total}</h4>
+                </div>
+                <div>
+                <Button href="/carrito" style={{ width: "40%", marginTop: "4%", height: "48PX", marginBottom: "8%", paddingTop: "1%" }} onClick={() => borrarTodoCarrito()} variant="outline-danger">
+                        CANCELAR COMPRA
+                    </Button>
+                    <Button onClick={venta} style={{ width: "40%", marginTop: "4%", marginLeft: "20%", marginBottom: "8%" }} variant="primary" size="lg">
+                        COMPRAR
+                    </Button>
+                    
+                </div>
             </main>
         </Fragment>
     );
